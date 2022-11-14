@@ -18,10 +18,10 @@ if(!file.exists(outpath)) {
     size = NA,
     wg = NA
   )
-  write_csv(df, outpath)
+  write.csv(df, outpath)
   start = 9712560
 } else{
-  df = read_csv(outpath)
+  df = read.csv(outpath)
   start = df %>% filter(
     if_all(everything(), ~!is.na(.x))
   ) %>% pull(id) %>% max
@@ -40,8 +40,8 @@ for(i in seq_along(page_ids)){
   print(i)
 
   id = page_ids[[i]]
-  url = glue("https://www.wg-gesucht.de/{id}.html" )
-  file = glue(tempfile(), ".html")
+  url = paste0("https://www.wg-gesucht.de/", id, ".html" )
+  file = paste0(tempfile(), ".html")
 
   # download
   download.file(url, file)
@@ -69,7 +69,7 @@ df_final = bind_rows(df, df_new)
 
 
 # write out ---------------------------------------------------------------
-write_csv(df_final, outpath)
+write.csv(df_final, outpath)
 
 
 
